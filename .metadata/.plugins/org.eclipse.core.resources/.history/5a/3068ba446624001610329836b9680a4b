@@ -1,0 +1,10 @@
+package flow.token;
+
+/**
+ * 
+ * @author AMACB
+ *
+ */
+public class Separator extends Token {
+
+}

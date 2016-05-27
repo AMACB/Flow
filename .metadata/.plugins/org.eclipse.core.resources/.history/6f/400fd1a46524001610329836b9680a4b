@@ -1,0 +1,10 @@
+package flow.token;
+
+/**
+ * The basic 
+ * @author alex
+ *
+ */
+public class Identifier extends Token {
+
+}

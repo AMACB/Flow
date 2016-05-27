@@ -1,0 +1,5 @@
+package flow.token;
+
+public class Token {
+
+}

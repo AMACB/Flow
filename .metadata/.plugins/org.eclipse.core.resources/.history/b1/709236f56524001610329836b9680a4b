@@ -1,0 +1,10 @@
+package flow.token;
+
+/**
+ * The 
+ * @author alex
+ *
+ */
+public class Operator extends Token {
+
+}

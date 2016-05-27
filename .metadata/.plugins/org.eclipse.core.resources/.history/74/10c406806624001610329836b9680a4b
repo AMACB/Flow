@@ -1,0 +1,10 @@
+package flow.token;
+
+/**
+ * The token for keywords, e.g. <code>if then else</code>
+ * @author alex
+ *
+ */
+public class Keyword extends Token {
+
+}

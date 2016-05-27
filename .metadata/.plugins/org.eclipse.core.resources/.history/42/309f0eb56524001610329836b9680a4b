@@ -1,0 +1,10 @@
+package flow.token;
+
+/**
+ * The basic identifier for variable names and method names.
+ * @author AMACB
+ *
+ */
+public class Identifier extends Token {
+
+}

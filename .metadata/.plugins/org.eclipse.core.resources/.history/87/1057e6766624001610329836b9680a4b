@@ -1,0 +1,10 @@
+package flow.token;
+
+/**
+ * 
+ * @author alex
+ *
+ */
+public class Keyword extends Token {
+
+}

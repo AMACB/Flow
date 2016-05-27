@@ -1,0 +1,10 @@
+package flow.token;
+
+/**
+ * The token for literal values: true, false, null, numbers, and 
+ * @author AMACB
+ *
+ */
+public class Literal extends Token {
+
+}
