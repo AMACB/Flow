@@ -2,7 +2,8 @@ package flow.compiled;
 
 public class Compiler {
 	/*
-	 * Make a huge comment that explains the compilation system here 
+	 * Psuedo-Compilation for Tokenised code.
+	 * Purpose: returns code easier for the interpreter to handle.
 	 */
 
 }
