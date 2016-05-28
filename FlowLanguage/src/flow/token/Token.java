@@ -24,8 +24,6 @@ public abstract class Token {
 		while (data.length() > 0) {
 			// Ignore whitespace
 			data.replaceFirst("^\\s+","");
-			// Ignore comments
-			data.replaceFirst("^#.*($|\n)","");
 			// Scan for keyword literals
 			for (String literal: keyLiterals) {
 				if (data.startsWith(literal)) {
