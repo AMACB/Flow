@@ -1,6 +1,9 @@
 package flow.compiled;
 
-public class Compiled {
-	//Testing testing 123
+public abstract class Compiled {
+	/*
+	 * Psuedo-Compilation for Tokenised code.
+	 * Returns a simpler version of source code.
+	 */
 
 }
