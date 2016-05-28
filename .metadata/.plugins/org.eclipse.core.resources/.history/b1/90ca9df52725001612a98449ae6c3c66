@@ -1,0 +1,15 @@
+package flow.compiled;
+
+import flow.token.Token;
+
+/**
+ * This class will contain the data for a pseudo-compiled 
+ * @author HankoTanks
+ *
+ */
+public class Compiled {
+	private String data;
+	Compiled(String compiledData) {
+		this.data = compiledData;
+	}
+}

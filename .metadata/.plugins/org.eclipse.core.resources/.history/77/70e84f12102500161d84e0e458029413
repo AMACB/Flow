@@ -1,0 +1,8 @@
+package flow.compiled;
+
+public class Compiler {
+	/* 
+	 * Hello hank
+	 * TODO Make a huge comment that explains the compilation system here 
+	 */
+}

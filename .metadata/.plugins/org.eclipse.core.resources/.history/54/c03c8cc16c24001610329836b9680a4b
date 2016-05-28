@@ -1,0 +1,20 @@
+package flow.token;
+
+/**
+ * The token for keywords.
+ * @author AMACB
+ *
+ */
+public class Keyword extends Token {
+	/**
+	 * The value of which the Keyword holds.
+	 */
+	private String data;
+	
+	public TokenType getType() {
+		return TokenType.IDENTIFIER;
+	}
+	public String getData() {
+		return data;
+	}
+}

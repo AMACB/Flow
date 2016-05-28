@@ -1,0 +1,6 @@
+package flow.compiled;
+
+public enum InstructionType {
+	ASSIGNMENT, /* Contains a variable name, an assignment operator, and an expression */
+	EXPRESSION, /* References variables, contains non assignment operators */
+}

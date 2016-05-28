@@ -1,9 +1,15 @@
 package flow.compiled;
 
-public class Compiler {
-	/*
-	 * Psuedo-Compilation for Tokenised code.
-	 * Purpose: returns code easier for the interpreter to handle.
-	 */
+import flow.token.Token;
 
+/**
+ * Psuedo-Compilation for Tokenized code.
+ * @author HankoTanks
+ *
+ */
+public class Compiler {
+	public Compiled compile(Token[] tokens) {
+		// TODO compile the tokens into an array of Instructions
+		return null;
+	}
 }

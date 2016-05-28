@@ -1,0 +1,10 @@
+package flow.compiled;
+
+/**
+ * This class contiains information for different types of compiled instructions
+ * @author alex
+ *
+ */
+public class Instruction {
+
+}

@@ -1,0 +1,38 @@
+package flow.token;
+
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
+public abstract class Token {
+	public abstract TokenType getType();
+	public abstract String getData();
+	private static String[] keyLiterals = new String[]{"null","false","true"};
+	
+	/**
+	 * Tokenize a String. The logic is as follows:
+	 * 
+	 * <ol>
+	 * 	<li></li>
+	 * </ol>
+	 * 
+	 * @return array of Tokens
+	 */
+	public static Token[] tokenize(String s) {
+		String data = new String(s);
+		ArrayList<Token> tokens = new ArrayList<Token>();
+		// Begin by scanning for keywords \\
+			// Scan for keyword literals
+			for (String literal: keyLiterals) {
+				if (data.startsWith(literal)) {
+					
+				}
+			}
+		return null;
+	}
+	
+	private char firstChar(String s) {
+		return s.charAt(0);
+	}
+	
+	private void removeFirstChars(String s, )
+}

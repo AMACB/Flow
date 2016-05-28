@@ -1,3 +1,4 @@
-commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\n<messages>\n<message>Added basic Eclipse data.</message>\n</messages>
+//BranchProjectTracker__/Users/alex/Documents/Flow/.git_master=<?xml version\="1.0" encoding\="UTF-8"?>\n<projects branch\="master">\n<project>/FlowLanguage</project>\n<project>/RemoteSystemsTempFiles</project>\n</projects>
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\n<messages>\n<message>Added comment recognition.</message>\n<message>Updated Compiler.</message>\n<message>Began tokenization method</message>\n<message>Added abstract methods for Token.</message>\n<message>Added classes for tokens.</message>\n<message>Changed Readme</message>\n<message>Removed test</message>\n<message>Added comment&\#x0A;</message>\n<message>Changed Test data.</message>\n<message>Added basic Eclipse data.</message>\n</messages>
 eclipse.preferences.version=1
 remote_connection_timeout=3000

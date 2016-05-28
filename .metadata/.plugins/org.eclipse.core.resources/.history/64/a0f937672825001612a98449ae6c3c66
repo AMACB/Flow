@@ -1,0 +1,5 @@
+package flow.compiled;
+
+public enum InstructionType {
+
+}

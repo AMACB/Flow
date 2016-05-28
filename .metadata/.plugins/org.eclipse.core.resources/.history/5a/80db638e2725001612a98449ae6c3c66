@@ -1,0 +1,12 @@
+package flow.compiled;
+
+/**
+ * This class will contain the data for a pseudo-compiled 
+ * @author HankoTanks
+ *
+ */
+public class Compiled {
+	public Compiled(Token[] tokens) {
+		
+	}
+}

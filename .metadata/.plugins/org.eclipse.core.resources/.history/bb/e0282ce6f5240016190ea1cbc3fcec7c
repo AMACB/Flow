@@ -1,0 +1,19 @@
+package flow.token;
+
+public abstract class Token {
+	public abstract TokenType getType();
+	public abstract String getData();
+	
+	/**
+	 * Tokenize a String. The logic is as follows:
+	 * 
+	 * 1. 
+	 * 2. 
+	 * 
+	 * @return array of Tokens
+	 */
+	public static Token[] tokenize(String data) {
+		
+		return null;
+	}
+}

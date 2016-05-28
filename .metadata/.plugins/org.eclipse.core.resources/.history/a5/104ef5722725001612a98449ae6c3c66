@@ -1,0 +1,10 @@
+package flow.compiled;
+
+/**
+ * This class will contain the data for a pseudo-compiled 
+ * @author alex
+ *
+ */
+public class Compiled {
+	//foo-bar-baz
+}
