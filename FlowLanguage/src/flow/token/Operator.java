@@ -6,5 +6,15 @@ package flow.token;
  *
  */
 public class Operator extends Token {
-
+	/**
+	 * The value of which the Operator holds.
+	 */
+	private String data;
+	
+	public TokenType getType() {
+		return TokenType.OPERATOR;
+	}
+	public String getData() {
+		return data;
+	}
 }

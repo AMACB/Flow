@@ -6,5 +6,15 @@ package flow.token;
  *
  */
 public class Identifier extends Token {
-
+	/**
+	 * The value of which the Identifier holds.
+	 */
+	private String data;
+	
+	public TokenType getType() {
+		return TokenType.IDENTIFIER;
+	}
+	public String getData() {
+		return data;
+	}
 }

@@ -6,5 +6,15 @@ package flow.token;
  *
  */
 public class Literal extends Token {
-
+	/**
+	 * The value of which the Literal holds.
+	 */
+	private String data;
+	
+	public TokenType getType() {
+		return TokenType.LITERAL;
+	}
+	public String getData() {
+		return data;
+	}
 }
