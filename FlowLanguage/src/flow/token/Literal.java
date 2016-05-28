@@ -11,6 +11,10 @@ public class Literal extends Token {
 	 */
 	private String data;
 	
+	public Literal(String data) {
+		this.data = data;
+	}
+	
 	public TokenType getType() {
 		return TokenType.LITERAL;
 	}
