@@ -1,6 +1,6 @@
 package flow.compiled;
 
-public abstract class Compiled {
+public class Compiler {
 	/*
 	 * Psuedo-Compilation for Tokenised code.
 	 * Purpose: returns code easier for the interpreter to handle.
