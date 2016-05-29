@@ -11,6 +11,10 @@ public class Identifier extends Token {
 	 */
 	private String data;
 	
+	public Identifier(String data) {
+		this.data = data;
+	}
+	
 	public TokenType getType() {
 		return TokenType.IDENTIFIER;
 	}

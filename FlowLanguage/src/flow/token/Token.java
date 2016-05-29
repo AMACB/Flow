@@ -8,22 +8,26 @@ public abstract class Token {
 	
 	public static void main(String[] args) throws TokenizeException {
 		String toTokenize;
-		toTokenize = "\"hi\"null32";
+		toTokenize = "(32,1)";
 		Token[] tokens = Token.tokenize(toTokenize);
 		System.out.println("[");
 		for (Token t: tokens) {
-			System.out.println(t.getData() + " " + t.getType());
+			System.out.println("    " + t.getData() + " " + t.getType());
 		}
 		System.out.println("]");
 	}
 	
 	public abstract TokenType getType();
 	public abstract String getData();
+	
 	private static String[] keyLiterals = new String[]{"null","false","true"};
 	private static String numberChars = "0123456789.";
+	private static String operatorChars = "!%^&|*-+=<>~/";
+	private static String delimeterChars = ".,()[]{}";
 	
 	private static Pattern numberEndPattern = Pattern.compile("^[1234567890.]+(.)"); 
 	private static Pattern stringEndPattern = Pattern.compile("^\\\".*(?<!\\\\)(\\\")");
+	private static Pattern operatorEndPattern = Pattern.compile("(^[\\!\\%\\^\\&\\|\\*\\-\\+\\=\\<\\>\\~\\/]+)");
 	
 	/**
 	 * Tokenize a String. The logic is as follows:
@@ -70,7 +74,7 @@ public abstract class Token {
 				continue mainLoop;
 			}
 			// Scan for string literals
-			if (first == '"') {
+			else if (first == '"') {
 				Matcher m = stringEndPattern.matcher(data);
 				if (!m.find()) {
 					throw new TokenizeException("Unexpected EOF while scanning string.");
@@ -81,7 +85,26 @@ public abstract class Token {
 				data = removePrefix(data,matched.length());
 				continue mainLoop;
 			}
-			
+			// TODO Scan for keywords and identifiers
+			// Scan for operators
+			else if (operatorChars.indexOf(first) != -1) {
+				Matcher m = operatorEndPattern.matcher(data);
+				if (!m.find()) {
+					throw new TokenizeException("Error in scanning operator.");
+				}
+				end = m.end(1);
+				matched = data.substring(0,end);
+				tokens.add(new Operator(matched));
+				data = removePrefix(data,matched.length());
+				continue mainLoop;
+			}
+			// Scan for delimeters
+			else if (delimeterChars.indexOf(first) != -1) {
+				matched = Character.toString(first);
+				tokens.add(new Delimeter(matched));
+				data = removePrefix(data,matched.length());
+				continue mainLoop;
+			}
 			if (data.trim().length() == 0) break mainLoop;
 			throw new TokenizeException("Error in tokenization; invalid token received.");
 		}

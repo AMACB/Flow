@@ -11,6 +11,10 @@ public class Operator extends Token {
 	 */
 	private String data;
 	
+	public Operator(String data) {
+		this.data = data;
+	}
+	
 	public TokenType getType() {
 		return TokenType.OPERATOR;
 	}

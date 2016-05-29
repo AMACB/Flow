@@ -12,6 +12,10 @@ public class Separator extends Token {
 	 */
 	private String data;
 	
+	public Separator(String data) {
+		this.data = data;
+	}
+	
 	public TokenType getType() {
 		return TokenType.SEPARATOR;
 	}

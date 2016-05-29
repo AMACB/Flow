@@ -13,6 +13,10 @@ public class Keyword extends Token {
 	 */
 	private String data;
 	
+	public Keyword(String data) {
+		this.data = data;
+	}
+	
 	public TokenType getType() {
 		return TokenType.KEYWORD;
 	}
