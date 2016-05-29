@@ -6,13 +6,13 @@ import java.util.regex.Pattern;
 
 public abstract class Token {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws TokenizeException {
 		String toTokenize;
-		toTokenize = "\"hi\"";
+		toTokenize = "\"hi\"null32";
 		Token[] tokens = Token.tokenize(toTokenize);
 		System.out.println("[");
 		for (Token t: tokens) {
-			System.out.println(t.getData());
+			System.out.println(t.getData() + " " + t.getType());
 		}
 		System.out.println("]");
 	}
@@ -23,7 +23,7 @@ public abstract class Token {
 	private static String numberChars = "0123456789.";
 	
 	private static Pattern numberEndPattern = Pattern.compile("^[1234567890.]+(.)"); 
-	private static Pattern stringEndPattern = Pattern.compile("\\\"(?<!\\\\)(\\\")");
+	private static Pattern stringEndPattern = Pattern.compile("^\\\".*(?<!\\\\)(\\\")");
 	
 	/**
 	 * Tokenize a String. The logic is as follows:
@@ -32,13 +32,16 @@ public abstract class Token {
 	 * 
 	 * @return array of Tokens
 	 */
-	public static Token[] tokenize(String data) {
+	public static Token[] tokenize(String data) throws TokenizeException {
+		data += " "; // ensures matches at the end are correct
 		ArrayList<Token> tokens = new ArrayList<Token>();
 		char first;
+		int end;
+		String matched;
 		mainLoop:
 		while (data.length() > 0) {
 			// Ignore whitespace
-			data = data.replaceAll("^\\s*","");
+			data = data.replaceAll("^\\s*","") + " ";
 			
 			// Ignore comments
 			data = data.replaceAll("^#.*(\n|$)","");
@@ -50,7 +53,6 @@ public abstract class Token {
 				if (data.startsWith(literal)) {
 					tokens.add(new Literal(literal));
 					data = removePrefix(data,literal.length());
-					System.out.println(data);
 					continue mainLoop;
 				}
 			}
@@ -59,11 +61,10 @@ public abstract class Token {
 			if (numberChars.indexOf(first) != -1) {
 				Matcher m = numberEndPattern.matcher(data);
 				if (!m.find()) {
-					System.err.println("Error in scanning numerical literal.");
-					break mainLoop;
+					throw new TokenizeException("Error in scanning numerical literal.");
 				}
-				int end = m.end(1);
-				String matched = data.substring(0,end-1);
+				end = m.end(1);
+				matched = data.substring(0,end-1);
 				tokens.add(new Literal(matched));
 				data = removePrefix(data,matched.length());
 				continue mainLoop;
@@ -72,18 +73,17 @@ public abstract class Token {
 			if (first == '"') {
 				Matcher m = stringEndPattern.matcher(data);
 				if (!m.find()) {
-					System.err.println("Unexpected EOF while scanning string.");
-					break mainLoop;
+					throw new TokenizeException("Unexpected EOF while scanning string.");
 				}
-				int end = m.end(1);
-				String matched = data.substring(0,end-1);
+				end = m.end(1);
+				matched = data.substring(0,end);
 				tokens.add(new Literal(matched));
 				data = removePrefix(data,matched.length());
 				continue mainLoop;
 			}
 			
-			System.err.print("Error in tokenization; invalid token received.");
-			break mainLoop;
+			if (data.trim().length() == 0) break mainLoop;
+			throw new TokenizeException("Error in tokenization; invalid token received.");
 		}
 		return tokens.toArray(new Token[tokens.size()]);
 	}
