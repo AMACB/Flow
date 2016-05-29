@@ -8,12 +8,13 @@ public abstract class Token {
 	
 	public static void main(String[] args) {
 		String toTokenize;
-		toTokenize = "32.12";
+		toTokenize = "32.121null23false";
 		Token[] tokens = Token.tokenize(toTokenize);
+		System.out.println("[");
 		for (Token t: tokens) {
 			System.out.println(t.getData());
 		}
-		System.out.println("done");
+		System.out.println("]");
 	}
 	
 	public abstract TokenType getType();
@@ -48,25 +49,29 @@ public abstract class Token {
 				if (data.startsWith(literal)) {
 					tokens.add(new Literal(literal));
 					data = removePrefix(data,literal.length());
+					System.out.println(data);
 					continue mainLoop;
 				}
 			}
 			first = firstChar(data);
 			// Scan for number literals
 			if (numberChars.indexOf(first) != -1) {
-				System.err.println(data.matches("^[1234567890.]+(.)"));
+				System.out.println(data.matches("^[1234567890.]+(.)"));
 				Matcher m = numberEndPattern.matcher(data);
 				if (!m.find()) {
 					System.err.println("Error in scanning numerical literal.");
 					break mainLoop;
 				}
-				int end = data.indexOf(m.group(0));
-				String matched = data.substring(0,end);
+				int end = m.end(1);
+				String matched = data.substring(0,end-1);
 				tokens.add(new Literal(matched));
 				data = removePrefix(data,matched.length());
 				System.out.println(data);
 				continue mainLoop;
 			}
+			
+			System.err.print("Error in tokenization; unknown token received.");
+			break mainLoop;
 		}
 		return tokens.toArray(new Token[tokens.size()]);
 	}
