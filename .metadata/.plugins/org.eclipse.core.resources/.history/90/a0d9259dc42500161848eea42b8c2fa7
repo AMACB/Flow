@@ -1,0 +1,13 @@
+package flow.token;
+
+public class TokenizeException extends Exception {
+
+	public TokenizeException() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public TokenizeException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+}

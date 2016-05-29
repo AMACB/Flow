@@ -1,0 +1,81 @@
+package flow.token;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public abstract class Token {
+	
+	public static void main(String[] args) {
+		//System.out.println("  ".replaceAll("^\\s*","").length());
+		String toTokenize;
+		//toTokenize = "null 32.42\"hi\\\"\"false #hi";
+		toTokenize = "32.12";
+		Token[] tokens = Token.tokenize(toTokenize);
+		for (Token t: tokens) {
+			System.out.println(t.getData());
+		}
+		System.out.println("done");
+	}
+	
+	public abstract TokenType getType();
+	public abstract String getData();
+	private static String[] keyLiterals = new String[]{"null","false","true"};
+	private static String numberChars = "0123456789.";
+	
+	private static Pattern numberEndPattern = Pattern.compile("^[1234567890.]+(.)"); 
+	
+	/**
+	 * Tokenize a String. The logic is as follows:
+	 * 
+	 * <ol>
+	 * 	<li></li>
+	 * </ol>
+	 * 
+	 * @return array of Tokens
+	 */
+	public static Token[] tokenize(String data) {
+		ArrayList<Token> tokens = new ArrayList<Token>();
+		char first;
+		mainLoop:
+		while (data.length() > 0) {
+			// Ignore whitespace
+			data = data.replaceAll("^\\s*","");
+			
+			// Ignore comments
+			data = data.replaceAll("^#.*(\n|$)","");
+			
+			if (data.length() == 0) break;
+			
+			// Scan for keyword literals
+			for (String literal: keyLiterals) {
+				if (data.startsWith(literal)) {
+					tokens.add(new Literal(literal));
+					data = removePrefix(data,literal);
+					continue mainLoop;
+				}
+			}
+			first = firstChar(data);
+			// Scan for number literals
+			if (numberChars.indexOf(first) != -1) {
+				System.err.println(data.matches("^[1234567890.]+(.)"));
+				Matcher m = numberEndPattern.matcher(data);
+				if (!m.find()) System.err.print("Error in scanning numerical literal.");
+				int end = data.indexOf(m.group(1));
+				String matched = data.substring(0,end);
+				tokens.add(new Literal(matched));
+				data = removePrefix(data,matched);
+				continue mainLoop;
+			}
+		}
+		return tokens.toArray(new Token[tokens.size()]);
+	}
+	
+	private static char firstChar(String s) {
+		return s.charAt(0);
+	}
+	
+	private static String removePrefix(String s, String prefix) {
+		return s.replaceFirst("^"+prefix,"");
+	}
+}

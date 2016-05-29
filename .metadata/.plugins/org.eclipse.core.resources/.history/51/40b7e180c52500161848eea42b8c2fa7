@@ -1,0 +1,100 @@
+package flow.token;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public abstract class Token {
+	
+	public static void main(String[] args) throws TokenizeException {
+		String toTokenize;
+		toTokenize = "\"hi\"null32";
+		Token[] tokens = Token.tokenize(toTokenize);
+		System.out.println("[");
+		for (Token t: tokens) {
+			System.out.println(t.getData());
+		}
+		System.out.println("]");
+	}
+	
+	public abstract TokenType getType();
+	public abstract String getData();
+	private static String[] keyLiterals = new String[]{"null","false","true"};
+	private static String numberChars = "0123456789.";
+	
+	private static Pattern numberEndPattern = Pattern.compile("^[1234567890.]+(.)"); 
+	private static Pattern stringEndPattern = Pattern.compile("^\\\".*(?<!\\\\)(\\\")");
+	
+	/**
+	 * Tokenize a String. The logic is as follows:
+	 * 
+	 * Does not currently work; results in infinite loop.
+	 * 
+	 * @return array of Tokens
+	 */
+	public static Token[] tokenize(String data) throws TokenizeException {
+		data += " "; // ensures matches at the end are valid
+		ArrayList<Token> tokens = new ArrayList<Token>();
+		char first;
+		int end;
+		String matched;
+		mainLoop:
+		while (data.length() > 0) {
+			// Ignore whitespace
+			data = data.replaceAll("^\\s*","") + " ";
+			
+			// Ignore comments
+			data = data.replaceAll("^#.*(\n|$)","");
+			
+			if (data.length() == 0) break;
+			
+			// Scan for keyword literals
+			for (String literal: keyLiterals) {
+				if (data.startsWith(literal)) {
+					tokens.add(new Literal(literal));
+					data = removePrefix(data,literal.length());
+					continue mainLoop;
+				}
+			}
+			first = firstChar(data);
+			// Scan for number literals
+			if (numberChars.indexOf(first) != -1) {
+				Matcher m = numberEndPattern.matcher(data);
+				if (!m.find()) {
+					throw new TokenizeException("Error in scanning numerical literal.");
+				}
+				end = m.end(1);
+				matched = data.substring(0,end-1);
+				tokens.add(new Literal(matched));
+				data = removePrefix(data,matched.length());
+				continue mainLoop;
+			}
+			// Scan for string literals
+			if (first == '"') {
+				Matcher m = stringEndPattern.matcher(data);
+				if (!m.find()) {
+					throw new TokenizeException("Unexpected EOF while scanning string.");
+				}
+				end = m.end(1);
+				matched = data.substring(0,end);
+				tokens.add(new Literal(matched));
+				data = removePrefix(data,matched.length());
+				continue mainLoop;
+			}
+			
+			
+			data = data.trim();
+			if (data.length() == 0) break mainLoop;
+			throw new TokenizeException("Error in tokenization; invalid token received.");
+		}
+		return tokens.toArray(new Token[tokens.size()]);
+	}
+	
+	private static char firstChar(String s) {
+		return s.charAt(0);
+	}
+	
+	private static String removePrefix(String s, int length) {
+		return s.substring(length);
+	}
+}

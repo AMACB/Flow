@@ -1,0 +1,7 @@
+package flow.token;
+
+public class Delimeter {
+	public Delimeter() {
+		// TODO Auto-generated constructor stub
+	}
+}
