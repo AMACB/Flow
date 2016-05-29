@@ -8,7 +8,7 @@ public abstract class Token {
 	
 	public static void main(String[] args) {
 		String toTokenize;
-		toTokenize = "32.121null23false";
+		toTokenize = "\"hi\"";
 		Token[] tokens = Token.tokenize(toTokenize);
 		System.out.println("[");
 		for (Token t: tokens) {
@@ -23,6 +23,7 @@ public abstract class Token {
 	private static String numberChars = "0123456789.";
 	
 	private static Pattern numberEndPattern = Pattern.compile("^[1234567890.]+(.)"); 
+	private static Pattern stringEndPattern = Pattern.compile("\\\"(?<!\\\\)(\\\")");
 	
 	/**
 	 * Tokenize a String. The logic is as follows:
@@ -56,7 +57,6 @@ public abstract class Token {
 			first = firstChar(data);
 			// Scan for number literals
 			if (numberChars.indexOf(first) != -1) {
-				System.out.println(data.matches("^[1234567890.]+(.)"));
 				Matcher m = numberEndPattern.matcher(data);
 				if (!m.find()) {
 					System.err.println("Error in scanning numerical literal.");
@@ -66,11 +66,23 @@ public abstract class Token {
 				String matched = data.substring(0,end-1);
 				tokens.add(new Literal(matched));
 				data = removePrefix(data,matched.length());
-				System.out.println(data);
+				continue mainLoop;
+			}
+			// Scan for string literals
+			if (first == '"') {
+				Matcher m = stringEndPattern.matcher(data);
+				if (!m.find()) {
+					System.err.println("Unexpected EOF while scanning string.");
+					break mainLoop;
+				}
+				int end = m.end(1);
+				String matched = data.substring(0,end-1);
+				tokens.add(new Literal(matched));
+				data = removePrefix(data,matched.length());
 				continue mainLoop;
 			}
 			
-			System.err.print("Error in tokenization; unknown token received.");
+			System.err.print("Error in tokenization; invalid token received.");
 			break mainLoop;
 		}
 		return tokens.toArray(new Token[tokens.size()]);
